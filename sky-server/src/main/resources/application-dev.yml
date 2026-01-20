@@ -3,6 +3,8 @@ sky:
     driver-class-name: com.mysql.cj.jdbc.Driver
     host: localhost
     port: 3306
+    ##这个port用来连接数据库，8080那个端口用来接收前端请求，实现web功能
+    ##定义数据库名字，然后数据库的连接账号和密码
     database: sky_take_out
     username: root
-    password: root
+    password: 123456
