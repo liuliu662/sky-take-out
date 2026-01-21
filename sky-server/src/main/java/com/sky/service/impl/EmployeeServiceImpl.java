@@ -1,26 +1,71 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
+import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 分页查询
+     *
+     * @param employeePageQueryDTO
+     * @return
+     */
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        //select * from employee limit 0,10
+        //开启分页查询
+        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
+        //用来自动分页,给sql语句加limit的,里面的参数是获取dto的page(页码)和pagesize(分页参数)的
+
+        Page<Employee> page= employeeMapper.pageQuery(employeePageQueryDTO);
+
+        //获得的是page,但是我们要返回pageresult,加工一下,pageresult需要total和records
+
+        long total = page.getTotal();
+        List<Employee> records = page.getResult();//employee装了多个员工对象,每个每个对象又封装了其对应数据
+
+        return new PageResult(total, records);
+    }
+
+
+
+
+
+
+
+
 
     /**
      * 新增员工

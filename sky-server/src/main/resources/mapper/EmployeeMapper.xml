@@ -2,4 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.EmployeeMapper">
+    <select id="pageQuery" resultType="com.sky.entity.Employee">
+    select * from employee
+    <where>
+        <if test="name != null and name != ''">
+            and name like concat('%',#{name},'%') ##模糊查询,前后包含name都可以,只要名字含name就能查到.
+        </if>
+    </where>
+    order by create_time desc
+    </select>
+
 </mapper>
