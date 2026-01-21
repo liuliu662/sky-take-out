@@ -40,4 +40,12 @@ public interface EmployeeMapper {
     //使用的是动态sql,用的映射文件,映射文件写server的resources的mapper里面里了
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 
+
+
+
+    /**
+     * 启用禁用员工账号
+     * @param employee
+     */
+    void update(Employee employee);
 }

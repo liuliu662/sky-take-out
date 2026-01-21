@@ -29,11 +29,21 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
 
+    /**
+     * 启用或禁用员工账号
+     *
+     * @param status
+     * @param id
+     */
+    public void startOrStop(Integer status, Long id) {
+        Employee employee = Employee.builder()
+                //为毛生成一个新的employee,然后丢给mapper,是要配合mapper的,新的employee只设置了id和status,其他属性为null,我的mapper就可以对null的不进行更新,对非null有参数的属性进行精准更新.
+                .status(status)
+                .id(id)
+                .build();
 
-
-
-
-
+        employeeMapper.update(employee);
+    }
 
 
 
@@ -138,5 +148,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         //3、返回实体对象
         return employee;
     }
+
+
 
 }

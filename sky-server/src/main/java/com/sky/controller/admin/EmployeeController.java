@@ -94,13 +94,26 @@ public class EmployeeController {
      */
     @GetMapping("/page")//里面page是方法路径
     @ApiOperation("员工分页查询")
-    //数据非json格式，所以不能用RequestBody
-    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+    //数据非json格式，所以不能用RequestBody,很有趣,这个前端发过来其实是key-value对,spring mvc会自动处理为java对象,所以不用加注解了.
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){    //这个dto是spring根据前端请求自动注入的
         log.info("员工分页查询,参数为{}",employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);//用来生成标准的返回结果
     }
 
 
-
+    /**
+     * 启用禁用员工账号
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")       //这玩意是路径参数,后面用{}包起来的就是路径传的参数,下面要用@PathVariable注解接受
+    @ApiOperation("启用禁用员工账号")
+    //id参数通过请求的时候发送简单参数就能获得.
+    public Result startOrStop(@PathVariable Integer status, Long id){
+        log.info("启用禁用员工账号,{},{}",status,id);
+        employeeService.startOrStop(status,id);
+        return Result.success();
+    }
 }

@@ -12,4 +12,23 @@
     order by create_time desc
     </select>
 
+
+
+    <update id="update" parameterType="com.sky.entity.Employee">
+    ##修改操作,你要在传入设定了你想修改参数的新employee对象给mapper,原理是什么,新的employee对象,你不设置参数的地方值为null,然后对其值进行判断,null的地方不进行修改,非null的地方进行修改,然后拼接出sql语句对数据库中的employee表进行修改.
+            update employee
+            <set>
+                <if test="name != null">name = #{name},</if>
+                <if test="username != null">username = #{username},</if>
+                <if test="password != null">password = #{password},</if>
+                <if test="phone != null">phone = #{phone},</if>
+                <if test="sex != null">sex = #{sex},</if>
+                <if test="idNumber != null">id_number = #{idNumber},</if>
+                <if test="updateTime != null">update_time = #{updateTime},</if>
+                <if test="updateUser != null">update_user = #{updateUser},</if>
+                <if test="status != null">status = #{status},</if>
+            </set>
+            where id = #{id}
+    </update>
+
 </mapper>
