@@ -37,8 +37,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());//拦截器已经把id拦下来了,通过threadload
+        //employee.setUpdateTime(LocalDateTime.now());
+        //employee.setUpdateUser(BaseContext.getCurrentId());//拦截器已经把id拦下来了,通过threadload
         employeeMapper.update(employee);
     }
 
@@ -124,15 +124,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
 
         //设置创建/修改时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
+        //employee.setCreateTime(LocalDateTime.now());
+        //employee.setUpdateTime(LocalDateTime.now());
 
         //设置创建人/修改人id,先随便设置一个
 
-        employee.setCreateUser(BaseContext.getCurrentId());
-
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        //employee.setCreateUser(BaseContext.getCurrentId());
+        //employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(employee);
     }
